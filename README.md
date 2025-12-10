@@ -1,21 +1,26 @@
 # FocusFlow
 
-A Pomodoro timer app built with React Native and Expo Router, designed to help you stay focused and track your productivity.
+A Full Local timer to remind you to forget your phone and focus on things that actually matters. The countdown starts every time you unlock your phone. Free code, no backdoors or any sort of tracking / online metrics.
 
 ## Screenshots
 
-<p float="left">
+<p>
   <img src="./assets/images/1.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
   <img src="./assets/images/2.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
   <img src="./assets/images/3.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
   <img src="./assets/images/4.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
   <img src="./assets/images/5.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
   <img src="./assets/images/6.png" width="200" />
 </p>
 
 ## Features
 
-- ⏱️ **Customizable Timer** - Set focus sessions from 15 to 60 minutes with preset options
+- ⏱️ **Customizable Timer** - Set focus sessions from 5 to 60 minutes with preset options
 - 📊 **Progress Tracking** - View detailed statistics and track your daily, weekly, and monthly progress
 - 🎯 **Focus Sessions** - Complete Pomodoro sessions with visual progress indicators
 - 🔥 **Streak Tracking** - Maintain your focus streak and stay motivated
@@ -95,7 +100,7 @@ FocusFlow/
 
 - **Welcome Screen**: Introduction to FocusFlow features
 - **Onboarding**: Quick setup and tutorial
-- **Timer Screen**: Main Pomodoro timer interface
+- **Timer Screen**: Main timer interface
 - **Stats Screen**: Detailed productivity analytics
 
 ## Customization
