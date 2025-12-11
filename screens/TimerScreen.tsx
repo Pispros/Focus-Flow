@@ -2,6 +2,7 @@ import Slider from '@react-native-community/slider';
 import { Flame, Pause, Play, Square } from 'lucide-react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -101,165 +102,176 @@ export default function FocusFlowTimer({ todayMinutes = 0 }: TimerScreenProps) {
         <Text style={styles.logoText}>Focus Flow</Text>
       </View>
 
-      {/* Main Content */}
-      <View style={styles.main}>
-        {/* Today's Stats Badge */}
-        <View style={styles.statsBadge}>
-          <Flame size={16} stroke={Colors.dark.primary} />
-          <Text style={styles.statsBadgeText}>
-            <Text style={styles.statsBadgeHighlight}>
-              {formatDuration(todayMinutes)}{' '}
-            </Text>
-            today
-          </Text>
-        </View>
-
-        {/* Circular Timer */}
-        <View style={styles.timerContainer}>
-          <View style={styles.timerGlow} />
-          <Svg width={280} height={280} style={styles.timerSvg}>
-            {/* Background Circle */}
-            <Circle
-              cx={140}
-              cy={140}
-              r={120}
-              stroke={Colors.dark.border}
-              strokeWidth={6}
-              fill="none"
-            />
-            {/* Progress Circle */}
-            <Circle
-              cx={140}
-              cy={140}
-              r={120}
-              stroke={Colors.dark.primary}
-              strokeWidth={6}
-              fill="none"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
-              strokeLinecap="round"
-              rotation={-90}
-              origin="140, 140"
-            />
-            {/* Indicator Dot */}
-            <Circle
-              cx={140 + 120 * Math.cos(((progress * 360 - 90) * Math.PI) / 180)}
-              cy={140 + 120 * Math.sin(((progress * 360 - 90) * Math.PI) / 180)}
-              r={8}
-              fill={Colors.dark.background}
-              stroke={Colors.dark.primary}
-              strokeWidth={3}
-            />
-          </Svg>
-          <View style={styles.timerTextContainer}>
-            <Text style={styles.timerText}>{formatTime(secondsRemaining)}</Text>
-            <Text style={styles.timerLabel}>
-              {isRunning ? (isPaused ? 'PAUSED' : 'FOCUS') : 'MINUTES'}
-            </Text>
-          </View>
-        </View>
-
-        {/* Slider - disabled when running */}
-        <View style={[styles.sliderContainer, isRunning && styles.disabled]}>
-          <View style={styles.sliderLabels}>
-            <Text style={styles.sliderLabel}>5m</Text>
-            <Text style={styles.sliderLabel}>60m</Text>
-          </View>
-          <View style={styles.sliderWrapper}>
-            <Slider
-              style={styles.slider}
-              minimumValue={5}
-              maximumValue={60}
-              value={minutes}
-              onValueChange={handleSliderChange}
-              minimumTrackTintColor={Colors.dark.primary}
-              maximumTrackTintColor={Colors.dark.border}
-              thumbTintColor={Colors.dark.white}
-              disabled={isRunning}
-            />
-          </View>
-        </View>
-
-        {/* Preset Buttons - disabled when running */}
-        <View style={[styles.presetContainer, isRunning && styles.disabled]}>
-          {PRESETS.map(preset => (
-            <TouchableOpacity
-              key={preset}
-              style={[
-                styles.presetBtn,
-                selectedPreset === preset && styles.presetBtnActive,
-              ]}
-              onPress={() => handlePresetPress(preset)}
-              disabled={isRunning}
-            >
-              <Text
-                style={[
-                  styles.presetBtnText,
-                  selectedPreset === preset && styles.presetBtnTextActive,
-                ]}
-              >
-                {preset}m
+      {/* Main Content - Scrollable */}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.main}>
+          {/* Today's Stats Badge */}
+          <View style={styles.statsBadge}>
+            <Flame size={16} stroke={Colors.dark.primary} />
+            <Text style={styles.statsBadgeText}>
+              <Text style={styles.statsBadgeHighlight}>
+                {formatDuration(todayMinutes)}{' '}
               </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Control Buttons */}
-        {!isRunning ? (
-          <TouchableOpacity
-            style={styles.startBtn}
-            activeOpacity={0.9}
-            onPress={handleStartSession}
-          >
-            <Play
-              size={24}
-              color={Colors.dark.background}
-              fill={Colors.dark.background}
-            />
-            <Text style={styles.startBtnText}>Start Session</Text>
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.controlsRow}>
-            <TouchableOpacity
-              style={styles.stopBtn}
-              activeOpacity={0.9}
-              onPress={handleStop}
-            >
-              <Square
-                size={20}
-                color={Colors.dark.white}
-                fill={Colors.dark.white}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.pauseBtn}
-              activeOpacity={0.9}
-              onPress={handlePauseResume}
-            >
-              {isPaused ? (
-                <>
-                  <Play
-                    size={24}
-                    color={Colors.dark.background}
-                    fill={Colors.dark.background}
-                  />
-                  <Text style={styles.pauseBtnText}>Resume</Text>
-                </>
-              ) : (
-                <>
-                  <Pause
-                    size={24}
-                    color={Colors.dark.background}
-                    fill={Colors.dark.background}
-                  />
-                  <Text style={styles.pauseBtnText}>Pause</Text>
-                </>
-              )}
-            </TouchableOpacity>
+              today
+            </Text>
           </View>
-        )}
-      </View>
-      <View style={styles.emptyH} />
+
+          {/* Circular Timer */}
+          <View style={styles.timerContainer}>
+            <View style={styles.timerGlow} />
+            <Svg width={280} height={280} style={styles.timerSvg}>
+              {/* Background Circle */}
+              <Circle
+                cx={140}
+                cy={140}
+                r={120}
+                stroke={Colors.dark.border}
+                strokeWidth={6}
+                fill="none"
+              />
+              {/* Progress Circle */}
+              <Circle
+                cx={140}
+                cy={140}
+                r={120}
+                stroke={Colors.dark.primary}
+                strokeWidth={6}
+                fill="none"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                strokeLinecap="round"
+                rotation={-90}
+                origin="140, 140"
+              />
+              {/* Indicator Dot */}
+              <Circle
+                cx={
+                  140 + 120 * Math.cos(((progress * 360 - 90) * Math.PI) / 180)
+                }
+                cy={
+                  140 + 120 * Math.sin(((progress * 360 - 90) * Math.PI) / 180)
+                }
+                r={8}
+                fill={Colors.dark.background}
+                stroke={Colors.dark.primary}
+                strokeWidth={3}
+              />
+            </Svg>
+            <View style={styles.timerTextContainer}>
+              <Text style={styles.timerText}>
+                {formatTime(secondsRemaining)}
+              </Text>
+              <Text style={styles.timerLabel}>
+                {isRunning ? (isPaused ? 'PAUSED' : 'FOCUS') : 'MINUTES'}
+              </Text>
+            </View>
+          </View>
+
+          {/* Slider - disabled when running */}
+          <View style={[styles.sliderContainer, isRunning && styles.disabled]}>
+            <View style={styles.sliderLabels}>
+              <Text style={styles.sliderLabel}>5m</Text>
+              <Text style={styles.sliderLabel}>60m</Text>
+            </View>
+            <View style={styles.sliderWrapper}>
+              <Slider
+                style={styles.slider}
+                minimumValue={5}
+                maximumValue={60}
+                value={minutes}
+                onValueChange={handleSliderChange}
+                minimumTrackTintColor={Colors.dark.primary}
+                maximumTrackTintColor={Colors.dark.border}
+                thumbTintColor={Colors.dark.white}
+                disabled={isRunning}
+              />
+            </View>
+          </View>
+
+          {/* Preset Buttons - disabled when running */}
+          <View style={[styles.presetContainer, isRunning && styles.disabled]}>
+            {PRESETS.map(preset => (
+              <TouchableOpacity
+                key={preset}
+                style={[
+                  styles.presetBtn,
+                  selectedPreset === preset && styles.presetBtnActive,
+                ]}
+                onPress={() => handlePresetPress(preset)}
+                disabled={isRunning}
+              >
+                <Text
+                  style={[
+                    styles.presetBtnText,
+                    selectedPreset === preset && styles.presetBtnTextActive,
+                  ]}
+                >
+                  {preset}m
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Control Buttons */}
+          {!isRunning ? (
+            <TouchableOpacity
+              style={styles.startBtn}
+              activeOpacity={0.9}
+              onPress={handleStartSession}
+            >
+              <Play
+                size={24}
+                color={Colors.dark.background}
+                fill={Colors.dark.background}
+              />
+              <Text style={styles.startBtnText}>Start Session</Text>
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.controlsRow}>
+              <TouchableOpacity
+                style={styles.stopBtn}
+                activeOpacity={0.9}
+                onPress={handleStop}
+              >
+                <Square
+                  size={20}
+                  color={Colors.dark.white}
+                  fill={Colors.dark.white}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.pauseBtn}
+                activeOpacity={0.9}
+                onPress={handlePauseResume}
+              >
+                {isPaused ? (
+                  <>
+                    <Play
+                      size={24}
+                      color={Colors.dark.background}
+                      fill={Colors.dark.background}
+                    />
+                    <Text style={styles.pauseBtnText}>Resume</Text>
+                  </>
+                ) : (
+                  <>
+                    <Pause
+                      size={24}
+                      color={Colors.dark.background}
+                      fill={Colors.dark.background}
+                    />
+                    <Text style={styles.pauseBtnText}>Pause</Text>
+                  </>
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -267,10 +279,17 @@ export default function FocusFlowTimer({ todayMinutes = 0 }: TimerScreenProps) {
 const styles = StyleSheet.create({
   emptyH: {
     height: 200,
+    backgroundColor: 'red',
   },
   container: {
     flex: 1,
     backgroundColor: Colors.dark.background,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   header: {
     flexDirection: 'row',
