@@ -1,0 +1,9 @@
+{
+  "name": "device-unlock",
+  "version": "1.0.0",
+  "description": "Device unlock detection for React Native",
+  "main": "index.ts",
+  "types": "index.ts",
+  "react-native": "index.ts",
+  "license": "MIT"
+}

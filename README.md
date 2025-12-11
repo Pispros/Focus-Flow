@@ -1,97 +1,207 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# FocusFlow
 
-# Getting Started
+A Full Local timer to remind you to forget your phone and focus on things that actually matters. The countdown starts every time you unlock your phone. Free code, no backdoors or any sort of tracking / online metrics.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Screenshots
 
-## Step 1: Start Metro
+<p>
+  <img src="./assets/images/1.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+  <img src="./assets/images/2.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+  <img src="./assets/images/3.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+  <img src="./assets/images/4.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+  <img src="./assets/images/5.png" width="200" />
+  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+  <img src="./assets/images/6.png" width="200" />
+</p>
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Features
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- ⏱️ **Customizable Timer** - Set focus sessions from 5 to 60 minutes with preset options (15, 25, 45, 60 minutes)
+- 🔒 **Device Lock Detection** - Automatically resets your session when you unlock your phone, keeping you accountable
+- 📊 **Progress Tracking** - View detailed statistics and track your daily, weekly, and overall progress
+- 🎯 **Focus Sessions** - Complete focused work sessions with visual circular progress indicators
+- 🔥 **Streak Tracking** - Maintain your focus streak and stay motivated with daily stats
+- 📳 **Vibration Feedback** - Get haptic feedback when your timer completes
+- 🌓 **Dark Mode** - Eye-friendly dark theme optimized for extended focus sessions
+- 💾 **Fully Local** - All data stored locally with SQLite, works completely offline
+- 📱 **Native Android** - Built with React Native for optimal performance
 
-```sh
-# Using npm
+## Tech Stack
+
+- **React Native** - Mobile framework (v0.82.1)
+- **TypeScript** - Type-safe development
+- **SQLite** - Local data persistence (react-native-sqlite-storage)
+- **React Navigation** - Navigation library
+- **Lucide React Native** - Beautiful icon set
+- **React Native SVG** - Vector graphics support
+- **AsyncStorage** - Persistent key-value storage
+- **Custom Native Module** - Device lock/unlock detection
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Android Studio (for Android development)
+- Java Development Kit (JDK 17 or higher)
+- Android SDK
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <your-repo-url>
+cd FocusFlow
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Start the development server:
+
+```bash
 npm start
-
-# OR using Yarn
+# or
 yarn start
 ```
 
-## Step 2: Build and run your app
+4. Run on Android:
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npx react-native run-android
 ```
 
-### iOS
+### Running on Different Platforms
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+- **Android**: Run `npx react-native run-android` (requires Android device/emulator)
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+## Project Structure
 
-```sh
-bundle install
+```
+FocusFlow/
+├── android/                    # Android native code
+│   └── app/
+│       └── src/main/
+│           └── java/com/focusflow/
+├── App.tsx                     # Root component with navigation
+├── screens/                    # App screens
+│   ├── TimerScreen.tsx        # Main timer interface
+│   ├── StatsScreen.tsx        # Statistics and analytics
+│   ├── SessionsScreen.tsx     # Session history
+│   ├── WelcomeScreen.tsx      # Welcome screen
+│   └── OnboardingScreen.tsx   # Onboarding flow
+├── hooks/
+│   └── app.hook.ts            # Timer and stats hooks
+├── services/
+│   └── app.service.ts         # Database and business logic
+├── contexts/
+│   └── TimerContext.tsx       # Global timer state management
+├── modules/
+│   └── device-unlock/         # Native module for lock/unlock detection
+│       ├── android/           # Android implementation
+│       ├── ios/               # iOS implementation (future)
+│       ├── index.ts           # JavaScript bridge
+│       └── useDeviceUnlock.ts # React hook
+├── constants/
+│   └── Colors.ts              # Color scheme
+└── components/                # Reusable UI components
 ```
 
-Then, and every time you update your native dependencies, run:
+## Key Features Explained
 
-```sh
-bundle exec pod install
+### Device Lock Detection
+
+The app includes a custom native module that detects when you lock and unlock your Android device:
+
+- **On Lock**: Timer continues running in the background (tracked by timestamp)
+- **On Unlock**: Current session is automatically cancelled (not recorded in database) and a new session starts with the same duration
+- **Accountability**: Encourages you to stay away from your phone during focus sessions
+
+### Timer Mechanism
+
+- Uses timestamp-based countdown that continues even when app is in background
+- Vibrates when session completes
+- Automatically saves completed sessions to local database
+- Global state management using React Context for real-time UI updates
+
+### Statistics & Analytics
+
+- **Today's Stats**: Total focus time and session count
+- **Weekly Chart**: Visual bar chart of daily focus hours
+- **Overall Stats**: Total sessions, average session length, current streak
+- **Session History**: Detailed list of recent sessions
+
+## Key Screens
+
+- **Welcome Screen**: Introduction to FocusFlow features
+- **Onboarding**: Quick setup and tutorial
+- **Timer Screen**: Main timer interface with circular progress indicator
+- **Stats Screen**: Detailed productivity analytics and charts
+- **Sessions Screen**: Complete session history
+
+## Customization
+
+### Colors
+
+Edit `constants/Colors.ts` to customize the app's color scheme:
+
+```typescript
+export default {
+  dark: {
+    background: '#09090b',
+    primary: '#f97316',
+    // ... more colors
+  },
+  light: {
+    // Light mode colors
+  },
+};
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## Development
 
-```sh
-# Using npm
-npm run ios
+### Scripts
 
-# OR using Yarn
-yarn ios
+- `npm start` - Start the Metro bundler
+- `npx react-native run-android` - Build and run on Android device/emulator
+- `adb logcat` - View Android logs for debugging
+
+### Building for Production
+
+```bash
+cd android
+./gradlew assembleRelease
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+The APK will be generated at `android/app/build/outputs/apk/release/app-release.apk`
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Privacy & Security
 
-## Step 3: Modify your app
+- **100% Local**: All data stored locally on your device using SQLite
+- **No Internet Required**: Works completely offline
+- **No Tracking**: Zero analytics, metrics, or user tracking
+- **No Permissions Abuse**: Only requires VIBRATE permission for haptic feedback
+- **Open Source**: Full transparency - review the code yourself
 
-Now that you have successfully run the app, let's make changes!
+## License
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+0BSD - Zero-Clause BSD License (Public Domain Equivalent)
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Contributing
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Congratulations! :tada:
+## Support
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+For issues and questions, please open an issue on GitHub.

@@ -3,4 +3,10 @@ plugins { id("com.facebook.react.settings") }
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 rootProject.name = 'focusFlow'
 include ':app'
+include ':device-unlock'
+project(':device-unlock').projectDir = new File(rootProject.projectDir, '../modules/device-unlock/android')
+include ':notification'
+project(':notification').projectDir = new File(rootProject.projectDir, '../modules/notification/android')
+include ':background-timer'
+project(':background-timer').projectDir = new File(rootProject.projectDir, '../modules/background-timer/android')
 includeBuild('../node_modules/@react-native/gradle-plugin')

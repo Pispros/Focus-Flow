@@ -110,6 +110,15 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    
+    // Device unlock native module
+    implementation project(':device-unlock')
+    
+    // Notification native module
+    implementation project(':notification')
+    
+    // Background timer native module
+    implementation project(':background-timer')
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

@@ -6,6 +6,9 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
+import com.focusflow.backgroundtimer.BackgroundTimerPackage
+import com.focusflow.deviceunlock.DeviceUnlockPackage
+import com.focusflow.notification.NotificationPackage
 
 class MainApplication : Application(), ReactApplication {
 
@@ -16,6 +19,9 @@ class MainApplication : Application(), ReactApplication {
         PackageList(this).packages.apply {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // add(MyReactNativePackage())
+          add(DeviceUnlockPackage())
+          add(NotificationPackage())
+          add(BackgroundTimerPackage())
         },
     )
   }

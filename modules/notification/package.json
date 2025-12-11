@@ -1,0 +1,9 @@
+{
+  "name": "@focusflow/notification",
+  "version": "1.0.0",
+  "description": "Focus session completion notifications",
+  "main": "index.ts",
+  "author": "FocusFlow",
+  "license": "0BSD",
+  "homepage": "https://github.com/Pispros/Focus-Flow"
+}

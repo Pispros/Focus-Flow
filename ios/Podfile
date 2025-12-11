@@ -22,6 +22,11 @@ target 'focusFlow' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  
+  # Custom native modules
+  pod 'DeviceUnlock', :path => '../modules/device-unlock/ios'
+  pod 'Notification', :path => '../modules/notification/ios'
+  pod 'BackgroundTimer', :path => '../modules/background-timer/ios'
 
   post_install do |installer|
     react_native_post_install(
