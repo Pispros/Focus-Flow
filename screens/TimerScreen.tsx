@@ -277,10 +277,6 @@ export default function FocusFlowTimer({ todayMinutes = 0 }: TimerScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  emptyH: {
-    height: 200,
-    backgroundColor: 'red',
-  },
   container: {
     flex: 1,
     backgroundColor: Colors.dark.background,
@@ -289,7 +285,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 20,
+    paddingBottom: 0,
   },
   header: {
     flexDirection: 'row',
