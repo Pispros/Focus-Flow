@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -53,54 +54,59 @@ export default function WelcomeScreen({ navigation }: any) {
         backgroundColor={Colors.dark.background}
       />
 
-      <View style={styles.main}>
-        {/* Logo Section */}
-        <View style={styles.logoSection}>
-          <View style={styles.logoGlow} />
-          <View style={styles.logoCircle}>
-            <Timer size={64} stroke={Colors.dark.primary} />
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.main}>
+          {/* Logo Section */}
+          <View style={styles.logoSection}>
+            <View style={styles.logoGlow} />
+            <View style={styles.logoCircle}>
+              <Timer size={64} stroke={Colors.dark.primary} />
+            </View>
           </View>
-        </View>
 
-        {/* Title Section */}
-        <View style={styles.titleSection}>
-          <Text style={styles.title}>Focus Flow</Text>
-          <Text style={styles.subtitle}>
-            Master your time with focused work sessions. Track your productivity
-            and build better habits.
-          </Text>
-        </View>
+          {/* Title Section */}
+          <View style={styles.titleSection}>
+            <Text style={styles.title}>Focus Flow</Text>
+            <Text style={styles.subtitle}>
+              Master your time with focused work sessions. Track your
+              productivity and build better habits.
+            </Text>
+          </View>
 
-        {/* Features Grid */}
-        <View style={styles.featuresContainer}>
-          <View style={styles.featuresGrid}>
-            {FEATURES.map((feature, index) => (
-              <View key={index} style={styles.featureCard}>
-                <View style={styles.featureIconContainer}>
-                  <feature.icon size={24} stroke={Colors.dark.primary} />
+          {/* Features Grid */}
+          <View style={styles.featuresContainer}>
+            <View style={styles.featuresGrid}>
+              {FEATURES.map((feature, index) => (
+                <View key={index} style={styles.featureCard}>
+                  <View style={styles.featureIconContainer}>
+                    <feature.icon size={24} stroke={Colors.dark.primary} />
+                  </View>
+                  <Text style={styles.featureTitle}>{feature.title}</Text>
+                  <Text style={styles.featureSubtitle}>{feature.subtitle}</Text>
                 </View>
-                <Text style={styles.featureTitle}>{feature.title}</Text>
-                <Text style={styles.featureSubtitle}>{feature.subtitle}</Text>
-              </View>
-            ))}
+              ))}
+            </View>
+
+            {/* How it works ? Button */}
+            <TouchableOpacity
+              style={styles.startBtn}
+              activeOpacity={0.9}
+              onPress={() => navigation.navigate('Onboarding')}
+            >
+              <ArrowRight size={24} stroke={Colors.dark.background} />
+              <Text style={styles.startBtnText}>How it works ?</Text>
+            </TouchableOpacity>
+
+            {/* Footer Text */}
+            <Text style={styles.footerText}>
+              No signup required • Start focusing now
+            </Text>
           </View>
-
-          {/* How it works ? Button */}
-          <TouchableOpacity
-            style={styles.startBtn}
-            activeOpacity={0.9}
-            onPress={() => navigation.navigate('Onboarding')}
-          >
-            <ArrowRight size={24} stroke={Colors.dark.background} />
-            <Text style={styles.startBtnText}>How it works ?</Text>
-          </TouchableOpacity>
-
-          {/* Footer Text */}
-          <Text style={styles.footerText}>
-            No signup required • Start focusing now
-          </Text>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -111,12 +117,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.background,
     paddingTop: StatusBar.currentHeight || 0,
   },
+  scrollContent: {
+    flexGrow: 1,
+    paddingTop: 40,
+    paddingBottom: 40,
+  },
   main: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 24,
-    paddingBottom: 120,
   },
   logoSection: {
     position: 'relative',
@@ -171,8 +181,8 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   featureCard: {
-    width: 120,
-    height: 120,
+    width: 130,
+    height: 135,
     backgroundColor: Colors.dark.card,
     borderWidth: 1,
     borderColor: Colors.dark.border,
